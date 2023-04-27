@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       MANIFEST_URL:
-        description: 'MANIFEST_URL (if want to use SSH keys, use git@github.com:XXXXX)'
+        description: 'MANIFEST_URL'
         required: true
-        default: 'git@github.com:minimal-manifest-twrp/platform_manifest_twrp_aosp.git'
+        default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp'
       MANIFEST_BRANCH:
         description: 'MANIFEST_BRANCH'
         required: true
@@ -14,7 +14,7 @@ on:
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
         required: true
-        default: 'git@github.com:johnt1989/d2q.git'
+        default: 'https://github.com/johnt1989/d2q'
       DEVICE_TREE_BRANCH:
         description: 'DEVICE_TREE_BRANCH'
         required: true
@@ -82,13 +82,6 @@ jobs:
         distribution: 'zulu'
         java-version: '8'
 
-    - name: Setup SSH Keys
-      if: ${{ startsWith(github.event.inputs.MANIFEST_URL, 'git@github.com') }}
-      uses: webfactory/ssh-agent@v0.5.4
-      with:
-          ssh-private-key: |
-              ${{ secrets.SSH_PRIVATE_KEY }}
-
     - name: Install repo
       run: |
         mkdir ~/bin
@@ -114,14 +107,6 @@ jobs:
     - name: Clone device tree
       run: |
         git clone ${{ github.event.inputs.DEVICE_TREE_URL }} -b ${{ github.event.inputs.DEVICE_TREE_BRANCH }} ./${{ github.event.inputs.DEVICE_PATH }}
-      working-directory: ${{ steps.pwd.outputs.workspace-folder }}
-
-    - name: Clone common tree
-      if: |
-        github.event.inputs.COMMON_TREE_URL != null
-        && github.event.inputs.COMMON_PATH != null
-      run: |
-        git clone ${{ github.event.inputs.COMMON_TREE_URL }} ./${{ github.event.inputs.COMMON_PATH }}
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
 
     - name: Check Build Tree
