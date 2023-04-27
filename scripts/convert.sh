@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ -n "$1" ] && [ -e "$1" ]; then
+if [ -n "$1" ] && [ -e $1 ]; then
 	file=$1
 else
 	echo " ** Input File : $1 does not exist"
@@ -22,19 +22,20 @@ else
 	exit 1
 fi
 
-if [ -e "$manifest_path" ]; then
-	sed -i 's@</manifest>@@g' "$manifest_path"
+
+if [ -e $manifest_path ]; then
+	sed -i 's@</manifest>@@g' $manifest_path
 else
-	echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" > "$manifest_path"
-	echo "<manifest>" >> "$manifest_path"
+	echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" > $manifest_path
+	echo "<manifest>" >> $manifest_path
 fi
 
-vars=("remote" "repository" "target_path" "branch" "revision")
+vars=( "remote" "repository" "target_path" "branch" "revision")
 
-for i in "${!vars[@]}"; do
+for i in ${!vars[@]} ; do
 	value=$(grep "${vars[$i]}" "$file" | cut -d '"' -f4)
 	if [ "$value" != "" ]; then
-		declare -a "${vars[$i]}""_val"="( $value )"
+		declare -a ${vars[$i]}"_val"="( $value )"
 	fi
 done
 
@@ -50,9 +51,8 @@ for i in {0..5}; do
 		elif [ "${revision_val[$i]}" != "" ]; then
 			revision=" revision=\"${revision_val[$i]}\""
 		fi
-		echo "  <project $target_path$repository$remote_for_repo$revision />" >> "$manifest_path"
+		echo "  <project $target_path$repository$remote_for_repo$revision />" >> $manifest_path
 	fi
 done
 
-echo "</manifest>" >> "$manifest_path"
-
+echo "</manifest>" >> $manifest_path
