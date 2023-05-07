@@ -111,7 +111,7 @@ jobs:
 
     - name: Sync Device Dependencies
       run: |
-        sudo chmod +× ${{ github.event.inputs.DEVICE_PATH }}/mkbootimg
+        sudo chmod +x ${{ github.event.inputs.DEVICE_PATH }}/mkbootimg
         bash ${GITHUB_WORKSPACE}/scripts/convert.sh ${{ github.event.inputs.DEVICE_PATH }}/${{ steps.buildtree.outputs.value }}.dependencies
         repo sync -j$(nproc --all)
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
