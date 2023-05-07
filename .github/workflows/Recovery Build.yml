@@ -14,7 +14,7 @@ on:
       DEVICE_TREE_URL:
         description: 'DEVICE_TREE_URL'
         required: true
-        default: 'https://github.com/johnt1989/d2q'
+        default: 'https://github.com/johnt1989/android_device_nubia_nx659j'
       DEVICE_TREE_BRANCH:
         description: 'DEVICE_TREE_BRANCH'
         required: true
@@ -22,15 +22,15 @@ on:
       DEVICE_PATH:
         description: 'DEVICE_PATH'
         required: true
-        default: 'device/samsung/d2q'
+        default: 'device/nubia/NX659J'
       DEVICE_NAME:
         description: 'DEVICE_NAME'
         required: true
-        default: 'd2q'
+        default: 'NX659J'
       MAKEFILE_NAME:
         description: 'MAKEFILE_NAME'
         required: true
-        default: 'twrp_d2q'
+        default: 'twrp_NX659J'
       BUILD_TARGET:
         description: 'BUILD_TARGET'
         required: true
@@ -111,7 +111,6 @@ jobs:
 
     - name: Sync Device Dependencies
       run: |
-        sudo chmod +x ${{ github.event.inputs.DEVICE_PATH }}/mkbootimg
         bash ${GITHUB_WORKSPACE}/scripts/convert.sh ${{ github.event.inputs.DEVICE_PATH }}/${{ steps.buildtree.outputs.value }}.dependencies
         repo sync -j$(nproc --all)
       working-directory: ${{ steps.pwd.outputs.workspace-folder }}
