@@ -11,6 +11,7 @@ on:
         options:
         - https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git
         - https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git
+        - https://github.com/mohammad92/platform_manifest_twrp_aosp.git
       MANIFEST_BRANCH:
         description: 'Manifest Branch'
         required: true
@@ -23,23 +24,23 @@ on:
       DEVICE_TREE:
         description: 'Custom Recovery Tree'
         required: true
-        default: 'https://github.com/johnt1989/android_device_nubia_nx659j'
+        default: 'https://github.com/johnt1989/d2q'
       DEVICE_TREE_BRANCH:
         description: 'Custom Recovery Tree Branch'
         required: true
-        default: 'android-11.0'
+        default: 'test'
       DEVICE_PATH:
         description: 'Specify your Device Path'
         required: true
-        default: 'device/nubia/NX659J'
+        default: 'device/samsung/d2q'
       DEVICE_NAME:
         description: 'Specify your Device Codename'
         required: true
-        default: 'NX659J'
+        default: 'd2q'
       MAKEFILE_NAME:
         description: 'Specify your Makefile Name'
         required: true
-        default: 'twrp_NX659J'
+        default: 'twrp_d2q'
       BUILD_TARGET:
         description: 'Specify your Build Target'
         required: true
