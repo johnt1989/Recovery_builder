@@ -11,7 +11,6 @@ on:
         options:
         - https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git
         - https://github.com/minimal-manifest-twrp/platform_manifest_twrp_omni.git
-        - https://github.com/mohammad92/platform_manifest_twrp_aosp.git
       MANIFEST_BRANCH:
         description: 'Manifest Branch'
         required: true
@@ -24,7 +23,7 @@ on:
       DEVICE_TREE:
         description: 'Custom Recovery Tree'
         required: true
-        default: 'https://github.com/johnt1989/d2q'
+        default: 'https://github.com/johnt1989/android_device_nubia_nx659j'
       DEVICE_TREE_BRANCH:
         description: 'Custom Recovery Tree Branch'
         required: true
@@ -32,15 +31,15 @@ on:
       DEVICE_PATH:
         description: 'Specify your Device Path'
         required: true
-        default: 'device/samsung/d2q'
+        default: 'device/nubia/NX659J'
       DEVICE_NAME:
         description: 'Specify your Device Codename'
         required: true
-        default: 'd2q'
+        default: 'NX659J'
       MAKEFILE_NAME:
         description: 'Specify your Makefile Name'
         required: true
-        default: 'twrp_d2q'
+        default: 'twrp_NX659J'
       BUILD_TARGET:
         description: 'Specify your Build Target'
         required: true
@@ -135,7 +134,6 @@ jobs:
 
     - name: Sync Dependencies
       run: |
-        sudo chmod +x ${{ github.event.inputs.DEVICE_PATH }}/mkbootimg
         bash ${GITHUB_WORKSPACE}/scripts/convert.sh ${{ github.event.inputs.DEVICE_PATH }}/${{ steps.buildtree.outputs.value }}.dependencies
         repo sync -j$(nproc --all)
       working-directory: ${{ steps.pwd.outputs.workdir }}
