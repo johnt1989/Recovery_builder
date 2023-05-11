@@ -52,7 +52,7 @@ on:
       FILE_TO_CHECK:
         description: 'Specify which libs to check'
         required: true
-        default: 'system/bin/qseecomd'
+        default: 'vendor/bin/qseecomd'
 
 permissions:
   contents: write
@@ -180,9 +180,8 @@ jobs:
 
     - name: Clone LDChecker
       run: |
-        git clone https://github.com/cd-Spidey/Random ./ldcheck
+        git clone https://github.com/johnt1989/Random ./ldcheck
         cd ldcheck/extract-tools
-        mv -n qseecomd ${GITHUB_WORKSPACE}/workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery/root/system/bin/
         mv -n libneeds ${GITHUB_WORKSPACE}/workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery/root/
         mv -n ldcheck ${GITHUB_WORKSPACE}/workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery/root/
         echo "Done moving essentials in checking missing dependencies."
