@@ -50,22 +50,10 @@ on:
         - boot
         - recovery
         - vendorboot
-      FILE_TO_CHECK_1:
-        description: 'Specify which libs to check'
-        required: false
-        default: 'vendor/bin/qseecomd'
-      FILE_TO_CHECK_2:
-        description: 'Specify which libs to check'
-        required: false
-        default: 'vendor/bin/hw/android.hardware.gatekeeper@1.0-service-qti'
-      FILE_TO_CHECK_3:
-        description: 'Specify which libs to check'
-        required: false
-        default: 'vendor/bin/hw/android.hardware.keymaster@4.0-service-qti'
-      FILE_TO_CHECK_4:
-        description: 'Specify which libs to check'
-        required: false
-        default: 'vendor/bin/hw/android.hardware.keymaster@4.1-service-qti'
+      FILES_TO_CHECK:
+        description: 'Specify a directory to check add the binary in Run'
+        required: true
+        default: 'vendor/bin'
 
 permissions:
   contents: write
@@ -218,9 +206,9 @@ jobs:
     - name: Run LDCheck
       run: |
         cd workspace/out/target/product/${{ github.event.inputs.DEVICE_NAME }}/recovery/root
-        python3 ldcheck -p system/lib64:vendor/lib64:system/lib:vendor/lib -d ${{ github.event.inputs.FILE_TO_CHECK_1 }}
-        python3 ldcheck -p system/lib64:vendor/lib64:system/lib:vendor/lib -d ${{ github.event.inputs.FILE_TO_CHECK_2 }}
-        python3 ldcheck -p system/lib64:vendor/lib64:system/lib:vendor/lib -d ${{ github.event.inputs.FILE_TO_CHECK_3 }}
-        python3 ldcheck -p system/lib64:vendor/lib64:system/lib:vendor/lib -d ${{ github.event.inputs.FILE_TO_CHECK_4 }}
+        python3 ldcheck -p system/lib64:vendor/lib64:system/lib:vendor/lib -d ${{ github.event.inputs.FILES_TO_CHECK }}/qseecomd
+        python3 ldcheck -p system/lib64:vendor/lib64:system/lib:vendor/lib -d ${{ github.event.inputs.FILES_TO_CHECK }}/hw/android.hardware.gatekeeper@1.0-service-qti
+        python3 ldcheck -p system/lib64:vendor/lib64:system/lib:vendor/lib -d ${{ github.event.inputs.FILES_TO_CHECK }}/hw/android.hardware.keymaster@4.0-service-qti
+        python3 ldcheck -p system/lib64:vendor/lib64:system/lib:vendor/lib -d ${{ github.event.inputs.FILES_TO_CHECK }}/hw/android.hardware.keymaster@4.1-service-qti
         echo "Done checking missing dependencies. Review, and reconfigure your tree."
       continue-on-error: true
