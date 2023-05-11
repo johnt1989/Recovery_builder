@@ -1,4 +1,4 @@
-name: Recovery Builder - TWRP
+name: Recovery Builder - TWRP 2
 
 on:
   workflow_dispatch:
