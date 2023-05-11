@@ -84,7 +84,7 @@ jobs:
     - name: Set Swap Space
       uses: johnt1989/set-swap-space@master
       with:
-        swap-size-gb: 16
+        swap-size-gb: 8
 
     - name: Prepare the Environment
       run: |
