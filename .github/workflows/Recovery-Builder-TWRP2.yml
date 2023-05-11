@@ -103,7 +103,7 @@ jobs:
         export CCACHE_EXEC=/usr/bin/ccache
         ccache -M 12G
         export LC_ALL=C 
-        echo "Ccache setup with 8gb"
+        echo "Ccache setup with 12gb"
 
     - name: Install OpenJDK
       run: |
