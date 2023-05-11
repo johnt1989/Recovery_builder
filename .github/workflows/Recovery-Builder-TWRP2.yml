@@ -84,7 +84,7 @@ jobs:
     - name: Set Swap Space
       uses: johnt1989/set-swap-space@master
       with:
-        swap-size-gb: 16
+        swap-size-gb: 8
 
     - name: Prepare the Environment
       run: |
@@ -95,17 +95,15 @@ jobs:
 
     - name: Ccache
       run: |
-        sudo apt-get update
-        sudo apt-get -y upgrade
         sudo apt-get -y install ccache
         sudo /usr/sbin/update-ccache-symlinks
         echo 'export PATH="/usr/lib/ccache:$PATH"' | tee -a ~/.bashrc
         source ~/.bashrc && echo $PATH
         export USE_CCACHE=1
         export CCACHE_EXEC=/usr/bin/ccache
-        ccache -M 25G
+        ccache -M 8G
         export LC_ALL=C 
-        echo "Ccache setup with 25gb"
+        echo "Ccache setup with 8gb"
 
     - name: Install OpenJDK
       run: |
