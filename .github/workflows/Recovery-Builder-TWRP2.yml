@@ -53,7 +53,7 @@ on:
       FILES_TO_CHECK:
         description: 'Specify a directory to check add the binary in Run'
         required: true
-        default: 'vendor/bin'
+        default: 'system/bin'
 
 permissions:
   contents: write
