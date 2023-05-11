@@ -84,7 +84,7 @@ jobs:
     - name: Set Swap Space
       uses: johnt1989/set-swap-space@master
       with:
-        swap-size-gb: 8
+        swap-size-gb: 12
 
     - name: Prepare the Environment
       run: |
@@ -101,7 +101,7 @@ jobs:
         source ~/.bashrc && echo $PATH
         export USE_CCACHE=1
         export CCACHE_EXEC=/usr/bin/ccache
-        ccache -M 8G
+        ccache -M 12G
         export LC_ALL=C 
         echo "Ccache setup with 8gb"
 
