@@ -124,12 +124,12 @@ jobs:
         echo "workdir=$(pwd)" >> $GITHUB_OUTPUT
         git config --global user.name "johnt1989"
         git config --global user.email "johnjohnt1989@gmail.com"
-        repo init -u ${{ github.event.inputs.MANIFEST_URL }} -b ${{ github.event.inputs.MANIFEST_BRANCH }}
+        repo init -u --depth=1 ${{ github.event.inputs.MANIFEST_URL }} -b ${{ github.event.inputs.MANIFEST_BRANCH }}
       id: pwd
         
     - name: Repo Sync
       run: |
-        repo sync --current-branch --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$( nproc --all )
+        repo sync --no-tags --optimized-fetch --prune --force-sync -j$( nproc --all )
       working-directory: workspace
       
     - name: Clone Device Tree
@@ -148,7 +148,7 @@ jobs:
     - name: Sync Dependencies
       run: |
         bash ${GITHUB_WORKSPACE}/scripts/convert.sh ${{ github.event.inputs.DEVICE_PATH }}/${{ steps.buildtree.outputs.value }}.dependencies
-        repo sync --current-branch --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync -j$( nproc --all )
+        repo sync --no-tags --optimized-fetch --prune --force-sync -j$( nproc --all )
       working-directory: ${{ steps.pwd.outputs.workdir }}
       continue-on-error: true
 
