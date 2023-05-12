@@ -84,7 +84,7 @@ jobs:
     - name: Set Swap Space
       uses: johnt1989/set-swap-space@master
       with:
-        swap-size-gb: 8
+        swap-size-gb: 12
 
     - name: Prepare the Environment
       run: |
@@ -142,11 +142,9 @@ jobs:
 
     - name: Building Recovery
       run: |
-        export MAKEFLAGS="-j8"
-        export ALLOW_MISSING_DEPENDENCIES=true
         source build/envsetup.sh
-        lunch ${{ github.event.inputs.MAKEFILE_NAME }}-eng
-        make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
+        export ALLOW_MISSING_DEPENDENCIES=true
+        lunch ${{ github.event.inputs.MAKEFILE_NAME }}-eng && make clean && make ${{ github.event.inputs.BUILD_TARGET }}image -j$(nproc --all)
         echo "Done building your ${{ github.event.inputs.BUILD_TARGET }}.img"
       working-directory: ${{ steps.pwd.outputs.workdir }}
       
@@ -197,5 +195,6 @@ jobs:
         python3 ldcheck -p system/lib64:vendor/lib64:system/lib:vendor/lib -d ${{ github.event.inputs.FILES_TO_CHECK }}/android.hardware.gatekeeper@1.0-service-qti
         python3 ldcheck -p system/lib64:vendor/lib64:system/lib:vendor/lib -d ${{ github.event.inputs.FILES_TO_CHECK }}/android.hardware.keymaster@4.0-service-qti
         python3 ldcheck -p system/lib64:vendor/lib64:system/lib:vendor/lib -d ${{ github.event.inputs.FILES_TO_CHECK }}/android.hardware.keymaster@4.1-service-qti
+        python3 ldcheck -p system/lib64:vendor/lib64:system/lib:vendor/lib -d ${{ github.event.inputs.FILES_TO_CHECK }}/android.hardware.keymaster@4.0-strongbox-service-qti
         echo "Done checking missing dependencies. Review, and reconfigure your tree."
       continue-on-error: true
